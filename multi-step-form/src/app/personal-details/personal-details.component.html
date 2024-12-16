@@ -1,0 +1,79 @@
+<div class="form-section">
+  <h1>Personal info</h1>
+  <p>Please provide your name, email address, and phone number.</p>
+  <form [formGroup]="personalInfoForm" (ngSubmit)="onSubmit()">
+    <div class="label-and-error">
+      <div><label for="name">Name</label></div>
+      <div>
+        @if(personalInfoForm.get('name')?.invalid &&
+        (personalInfoForm.get('name')?.dirty ||
+        personalInfoForm.get('name')?.touched || isSubmitted)){
+        <span class="error">This is required</span>
+        }
+      </div>
+    </div>
+    <input
+      id="name"
+      type="text"
+      placeholder="e.g. Stephen King"
+      formControlName="name"
+      [class.invalid]="
+        personalInfoForm.get('name')?.invalid &&
+        (personalInfoForm.get('name')?.dirty ||
+          personalInfoForm.get('name')?.touched ||
+          isSubmitted)
+      "
+      autocomplete="off"
+    />
+
+    <div class="label-and-error">
+      <div><label for="email">Email Address</label></div>
+      <div>
+        @if(personalInfoForm.get('email')?.invalid &&
+        (personalInfoForm.get('email')?.dirty ||
+        personalInfoForm.get('email')?.touched || isSubmitted)){
+        <span class="error">This is required</span>
+        }
+      </div>
+    </div>
+    <input
+      id="email"
+      type="email"
+      placeholder="e.g. stephenking@lorem.com"
+      formControlName="email"
+      [class.invalid]="
+        personalInfoForm.get('email')?.invalid &&
+        (personalInfoForm.get('email')?.dirty ||
+          personalInfoForm.get('email')?.touched ||
+          isSubmitted)
+      "
+      autocomplete="off"
+    />
+
+    <div class="label-and-error">
+      <div><label for="phone">Phone Number</label></div>
+      <div>
+        @if(personalInfoForm.get('phone')?.invalid &&
+        (personalInfoForm.get('phone')?.dirty ||
+        personalInfoForm.get('phone')?.touched || isSubmitted)){
+        <span class="error">This is required</span>
+        }
+      </div>
+    </div>
+    <input
+      id="phone"
+      type="text"
+      placeholder="e.g. +1 234 567 890"
+      formControlName="phone"
+      [class.invalid]="
+        personalInfoForm.get('phone')?.invalid &&
+        (personalInfoForm.get('phone')?.dirty ||
+          personalInfoForm.get('phone')?.touched ||
+          isSubmitted)
+      "
+      autocomplete="off"
+    />
+
+    <button type="submit">Next Step</button>
+  </form>
+</div>

@@ -1,0 +1,37 @@
+{
+  "plans": [
+    {
+      "name": "Arcade",
+      "image": "./images/arcade-image.png",
+      "price": {
+        "monthly": 9,
+        "yearly": {
+          "yearlyPrice": 90,
+          "duration": "2 months free"
+        }
+      }
+    },
+    {
+      "name": "Advanced",
+      "image": "./images/advanced-image.png",
+      "price": {
+        "monthly": 12,
+        "yearly": {
+          "yearlyPrice": 120,
+          "duration": "2 months free"
+        }
+      }
+    },
+    {
+      "name": "Pro",
+      "image": "./images/pro-image.png",
+      "price": {
+        "monthly": 15,
+        "yearly": {
+          "yearlyPrice": 150,
+          "duration": "2 months free"
+        }
+      }
+    }
+  ]
+}
