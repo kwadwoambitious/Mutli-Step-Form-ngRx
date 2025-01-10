@@ -1,0 +1,56 @@
+<div class="plan-section">
+  <h1>Select your plan</h1>
+  <p>You have the option of monthly or yearly billing.</p>
+  <div class="plan-cards">
+    @for(plan of selectPlanContainer; track plan.name){
+    <div
+      class="plan-card"
+      [class.selected]="
+        selectedPlan?.name?.toLowerCase() === plan.name.toLowerCase()
+      "
+      (click)="selectPlan(plan)"
+    >
+      <div>
+        <img [src]="plan.image" loading="lazy" [alt]="plan.name" />
+      </div>
+      <div>
+        <p>{{ plan.name }}</p>
+        @if(isToggled){
+        <span class="price">${{ plan.price.yearly.yearlyPrice }}/yr</span>
+        <span class="yearly-duration">{{ plan.price.yearly.duration }}</span>
+        }@else {
+        <span class="price">${{ plan.price.monthly }}/mo</span>
+        }
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="plan-duration">
+    <div>
+      <span class="monthly-plan" [ngClass]="{ selected: !isToggled }"
+        >Monthly</span
+      >
+    </div>
+    <div class="theme-toggle">
+      <input
+        type="checkbox"
+        id="theme-switch"
+        class="toggle-checkbox"
+        [(ngModel)]="isToggled"
+        (click)="toggleDuration()"
+      />
+      <label for="theme-switch" class="toggle-label"></label>
+    </div>
+    <div>
+      <span class="yearly-plan" [ngClass]="{ selected: isToggled }"
+        >Yearly</span
+      >
+    </div>
+  </div>
+
+  <div class="buttons">
+    <a routerLink="/your-info" class="goBack-btn">Go Back</a>
+    <a routerLink="/add-ons" class="next-btn">Next Step</a>
+  </div>
+</div>

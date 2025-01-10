@@ -1,0 +1,39 @@
+<div class="add-ons-section">
+  <h1>Pick add-ons</h1>
+  <p>Add-ons help enhance your gaming experience.</p>
+  <div class="add-ons">
+    @for(add_on of addOnsContainer; track add_on.name){
+    <div
+      class="add-on"
+      [ngClass]="{ checked: add_on.selected }"
+      (click)="getChecked(add_on)"
+    >
+      <div class="add-on-items">
+        <div>
+          <input
+            type="checkbox"
+            [(ngModel)]="add_on.selected"
+            class="checkbox-input"
+          />
+        </div>
+        <div>
+          <p>{{ add_on.name }}</p>
+          <span>{{ add_on.benefit }}</span>
+        </div>
+      </div>
+      <div>
+        @if(isToggled){
+        <span class="add-on-price">+${{ add_on.pricing.yearly }}/yr</span>
+        }@else {
+        <span class="add-on-price">+${{ add_on.pricing.monthly }}/mo</span>
+        }
+      </div>
+    </div>
+    }
+
+    <div class="buttons">
+      <a class="goBack-btn" routerLink="/select-plan"> Go Back </a>
+      <a class="next-btn" routerLink="/summary">Next Step</a>
+    </div>
+  </div>
+</div>

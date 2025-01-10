@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Online Service",
+    "benefit": "Access to multiplayer games",
+    "pricing": {
+      "monthly": 1,
+      "yearly": 10
+    },
+    "selected": false
+  },
+  {
+    "name": "Larger Storage",
+    "benefit": "Extra 1TB of cloud save",
+    "pricing": {
+      "monthly": 2,
+      "yearly": 20
+    },
+    "selected": false
+  },
+  {
+    "name": "Customizable Profile",
+    "benefit": "Custom theme on your profile",
+    "pricing": {
+      "monthly": 2,
+      "yearly": 20
+    },
+    "selected": false
+  }
+]

@@ -1,0 +1,59 @@
+<div class="summary-section">
+  @if(confirmed){
+  <div class="thank-you-message">
+    <img src="/images/check-image.png" alt="check" />
+    <h1>Thank you!</h1>
+    <p>{{ message }}</p>
+  </div>
+  } @else{ @if(selectedPlan){
+  <h1>Finishing up</h1>
+  <p>Double-check everything looks OK before confirming.</p>
+  <div class="confirm-details">
+    <div class="plan-details">
+      <div>
+        <p class="selected-plan">
+          {{ selectedPlan.name }}
+          ({{ !isToggled ? "Monthly" : "Yearly" }})
+        </p>
+        <a routerLink="/select-plan" class="change-btn">Change</a>
+      </div>
+      <div>
+        <span class="plan-price"
+          >${{ getPlanPrice() }}{{ !isToggled ? "/mo" : "/yr" }}</span
+        >
+      </div>
+    </div>
+
+    <hr />
+
+    @for(add_on of selectedAddOns; track add_on.name){
+    <p class="add-on">
+      {{ add_on.name }}
+      <span>
+        +${{ !isToggled ? add_on.pricing.monthly : add_on.pricing.yearly }}
+        {{ !isToggled ? "/mo" : "/yr" }}
+      </span>
+    </p>
+    }
+  </div>
+
+  <p class="total">
+    Total (per {{ !isToggled ? "month" : "year" }})
+    <span>${{ calculateTotal() }}{{ !isToggled ? "/mo" : "/yr" }}</span>
+  </p>
+
+  <div class="buttons">
+    <a routerLink="/add-ons" class="goBack-btn">Go Back</a>
+    <button
+      type="button"
+      class="confirm-btn"
+      (click)="isConfirmed()"
+      [disabled]="!selectedPlan"
+    >
+      Confirm
+    </button>
+  </div>
+  }@else{
+  <p>No plan selected. Please go back and select a plan.</p>
+  } }
+</div>

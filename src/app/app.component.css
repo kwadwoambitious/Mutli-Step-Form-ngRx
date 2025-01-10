@@ -1,0 +1,118 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Ubuntu", sans-serif;
+}
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  padding: 20px;
+  max-width: 900px;
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.sidebar {
+  width: 30%;
+  background-color: #483eff;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.steps {
+  margin-top: 40px;
+  padding-inline: 32px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 25px;
+  text-decoration: none;
+}
+.step:hover {
+  cursor: pointer;
+}
+.step span {
+  display: block;
+}
+.step .number {
+  border: 1px solid white;
+  color: white;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+}
+.step-number {
+  font-size: 12px;
+  color: #abbcff;
+  font-weight: 400;
+}
+.step-title {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: white;
+}
+.step.active .number {
+  background-color: #bee2fd;
+  color: #022959;
+  border: 1px solid #bee2fd;
+}
+.reset-btn {
+  border: none;
+  margin: 30px;
+  font-family: "Ubuntu", sans-serif;
+  background-color: #022959;
+  color: white;
+  padding: 13px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+.reset-btn:hover {
+  background-color: #164a8a;
+}
+@media screen and (max-width: 600px) {
+  .card {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    padding-bottom: 20px;
+  }
+  .sidebar {
+    width: 100%;
+  }
+  .steps {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+  .step-number-and-title {
+    display: none;
+  }
+  .sidebar img {
+    content: url("/images/bg-sidebar-mobile.svg");
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,138 @@
+.add-ons-section {
+  padding-right: 70px;
+}
+.add-ons {
+  display: block;
+  width: 100%;
+}
+.add-ons-section h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 11px;
+  color: #022959;
+}
+.add-ons-section > p {
+  margin-bottom: 35px;
+  color: #9699aa;
+  font-weight: 400;
+  line-height: 25px;
+}
+.add-on {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid #f8f9ff;
+  padding: 17px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.add-on:hover {
+  border: 2px solid #483eff;
+  cursor: pointer;
+}
+.checked {
+  border: 2px solid #483eff;
+}
+.checked.add-on {
+  background-color: #f8f9ff;
+}
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+  accent-color: #a6ffa1;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 2px solid #d6d9e6;
+  border-radius: 4px;
+  outline: none;
+}
+input[type="checkbox"]:checked {
+  background-color: #483eff;
+  border-color: #483eff;
+}
+input[type="checkbox"]:hover {
+  border: 2px solid #483eff;
+}
+input[type="checkbox"]:checked::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.add-on-items {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.add-on-items p {
+  font-weight: 600;
+  margin-bottom: 7px;
+  font-size: 15px;
+}
+.add-on-items span {
+  color: #9699aa;
+  font-weight: 400;
+  font-size: 14px;
+}
+.add-on-price {
+  color: #483eff;
+  font-weight: 400;
+}
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 84px;
+}
+.goBack-btn {
+  font-family: "Ubuntu", sans-serif;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  font-weight: 600;
+  color: #9699aa;
+  transition: color 0.3s ease-in-out;
+}
+.goBack-btn:hover {
+  cursor: pointer;
+  color: #022959;
+}
+.next-btn {
+  font-family: "Ubuntu", sans-serif;
+  background-color: #022959;
+  color: white;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.3s ease-in-out;
+}
+.next-btn:hover {
+  background-color: #164a8a;
+}
+@media screen and (max-width: 600px) {
+  .add-ons-section {
+    width: 95%;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.3);
+    margin-top: -100px;
+    padding: 40px 20px;
+  }
+  .add-on-items {
+    gap: 8px;
+  }
+}
