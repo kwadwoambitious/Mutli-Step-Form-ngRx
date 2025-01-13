@@ -5,55 +5,62 @@
     <h1>Thank you!</h1>
     <p>{{ message }}</p>
   </div>
-  } @else{ @if(selectedPlan){
+  } @else { @if(selectedPlan$ | async; as selectedPlan){
   <h1>Finishing up</h1>
   <p>Double-check everything looks OK before confirming.</p>
   <div class="confirm-details">
     <div class="plan-details">
       <div>
         <p class="selected-plan">
-          {{ selectedPlan.name }}
-          ({{ !isToggled ? "Monthly" : "Yearly" }})
+          {{ selectedPlan.planType | titlecase }}
+          ({{ selectedPlan.billing === "monthly" ? "Monthly" : "Yearly" }})
         </p>
         <a routerLink="/select-plan" class="change-btn">Change</a>
       </div>
       <div>
         <span class="plan-price"
-          >${{ getPlanPrice() }}{{ !isToggled ? "/mo" : "/yr" }}</span
+          >${{ selectedPlan.price
+          }}{{ selectedPlan.billing === "monthly" ? "/mo" : "/yr" }}</span
         >
       </div>
     </div>
 
     <hr />
 
-    @for(add_on of selectedAddOns; track add_on.name){
-    <p class="add-on">
-      {{ add_on.name }}
-      <span>
-        +${{ !isToggled ? add_on.pricing.monthly : add_on.pricing.yearly }}
-        {{ !isToggled ? "/mo" : "/yr" }}
-      </span>
-    </p>
-    }
+    @if(selectedAddOns$ | async; as selectedAddOns){ @for(addon of addOnsData;
+    track addon.name){ @if(addon.name === 'Online service' &&
+    selectedAddOns.onlineService || addon.name === 'Larger storage' &&
+    selectedAddOns.largerStorage || addon.name === 'Customizable profile' &&
+    selectedAddOns.customProfile){
+    <div class="add-on">
+      <div>
+        <p>{{ addon.name }}</p>
+      </div>
+      <div>
+        <span>
+          +${{ isYearly ? addon.pricing.yearly : addon.pricing.monthly }}
+          {{ isYearly ? "/yr" : "/mo" }}
+        </span>
+      </div>
+    </div>
+    } } }
   </div>
 
   <p class="total">
-    Total (per {{ !isToggled ? "month" : "year" }})
-    <span>${{ calculateTotal() }}{{ !isToggled ? "/mo" : "/yr" }}</span>
+    Total (per {{ selectedPlan.billing === "monthly" ? "month" : "year" }})
+    <span
+      >${{ totalPrice$ | async
+      }}{{ selectedPlan.billing === "monthly" ? "/mo" : "/yr" }}</span
+    >
   </p>
 
   <div class="buttons">
     <a routerLink="/add-ons" class="goBack-btn">Go Back</a>
-    <button
-      type="button"
-      class="confirm-btn"
-      (click)="isConfirmed()"
-      [disabled]="!selectedPlan"
-    >
+    <button type="button" class="confirm-btn" (click)="isConfirmed()">
       Confirm
     </button>
   </div>
-  }@else{
+  } @else {
   <p>No plan selected. Please go back and select a plan.</p>
   } }
 </div>

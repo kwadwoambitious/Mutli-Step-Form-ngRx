@@ -61,6 +61,8 @@ hr {
   border: 1px solid #9699aa;
 }
 .add-on {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 16px;
   color: #9699aa;
   font-size: 14px;

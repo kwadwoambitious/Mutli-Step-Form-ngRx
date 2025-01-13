@@ -6,6 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as FormActions from '../store/actions/form.actions';
+import * as FormSelectors from '../store/selectors/form.selectors';
 
 @Component({
   selector: 'app-details-info',
@@ -23,28 +26,35 @@ export class PersonalDetailsComponent implements OnInit {
 
   public isSubmitted = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
-    const savedName = localStorage.getItem('name');
-    const savedEmail = localStorage.getItem('email');
-    const savedPhone = localStorage.getItem('phone');
-
-    this.personalInfoForm.patchValue({
-      name: savedName,
-      email: savedEmail,
-      phone: savedPhone,
-    });
+    this.store
+      .select(FormSelectors.selectPersonalInfo)
+      .subscribe((personalInfo) => {
+        if (personalInfo) {
+          this.personalInfoForm.patchValue({
+            name: personalInfo.name,
+            email: personalInfo.email,
+            phone: personalInfo.phoneNumber,
+          });
+        }
+      });
   }
 
   public onSubmit(): void {
     this.isSubmitted = true;
 
-    localStorage.setItem('name', this.personalInfoForm.value.name ?? '');
-    localStorage.setItem('email', this.personalInfoForm.value.email ?? '');
-    localStorage.setItem('phone', this.personalInfoForm.value.phone ?? '');
-
     if (this.personalInfoForm.valid) {
+      this.store.dispatch(
+        FormActions.updatePersonalInfo({
+          name: this.personalInfoForm.value.name ?? '',
+          email: this.personalInfoForm.value.email ?? '',
+          phoneNumber: this.personalInfoForm.value.phone ?? '',
+        })
+      );
+
+      this.store.dispatch(FormActions.nextStep());
       this.router.navigate(['/select-plan']);
     }
   }
