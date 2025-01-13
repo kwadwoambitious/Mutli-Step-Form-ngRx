@@ -112,7 +112,7 @@
     display: none;
   }
   .sidebar img {
-    content: url("/images/bg-sidebar-mobile.svg");
+    content: url("/assets/images/bg-sidebar-mobile.svg");
     margin-top: 0;
   }
 }

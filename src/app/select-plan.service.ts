@@ -10,7 +10,7 @@ export class SelectPlanService {
   constructor(private http: HttpClient) {}
 
   public getPlansData(): Observable<Plans[]> {
-    return this.http.get<Plans[]>('./plans-data.json').pipe(
+    return this.http.get<Plans[]>('assets/plans-data.json').pipe(
       map((plans) =>
         plans.map((plan) => ({
           ...plan,
