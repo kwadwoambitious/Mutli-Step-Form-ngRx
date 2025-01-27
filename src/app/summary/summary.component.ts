@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as FormSelectors from '../store/selectors/form.selectors';
 import * as FormActions from '../store/actions/form.actions';
-import { switchMap, combineLatestWith } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { switchMap, combineLatestWith, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
 import { AddOns } from '../add-ons-interface';
 
 @Component({
@@ -39,21 +39,29 @@ export class SummaryComponent implements OnInit {
       pricing: { monthly: 2, yearly: 20 },
     },
   ];
+  private destroy$ = new Subject<void>();
 
   constructor(private store: Store) {
-    this.selectedPlan$ = this.store
-      .select(FormSelectors.selectTempPlan)
-      .pipe(
-        switchMap((tempPlan) =>
-          tempPlan
-            ? of(tempPlan)
-            : this.store.select(FormSelectors.selectSelectedPlan)
-        )
-      );
-    this.selectedAddOns$ = this.store.select(FormSelectors.selectAddOns);
-    this.totalPrice$ = this.store.select(FormSelectors.selectTotalPrice);
+    this.selectedPlan$ = this.store.select(FormSelectors.selectTempPlan).pipe(
+      takeUntil(this.destroy$),
+      switchMap((tempPlan) =>
+        tempPlan
+          ? of(tempPlan)
+          : this.store
+              .select(FormSelectors.selectSelectedPlan)
+              .pipe(takeUntil(this.destroy$))
+      )
+    );
 
-    this.selectedPlan$.subscribe((plan) => {
+    this.selectedAddOns$ = this.store
+      .select(FormSelectors.selectAddOns)
+      .pipe(takeUntil(this.destroy$));
+
+    this.totalPrice$ = this.store
+      .select(FormSelectors.selectTotalPrice)
+      .pipe(takeUntil(this.destroy$));
+
+    this.selectedPlan$.pipe(takeUntil(this.destroy$)).subscribe((plan) => {
       this.isYearly = plan?.billing === 'yearly';
     });
   }
@@ -62,7 +70,12 @@ export class SummaryComponent implements OnInit {
     this.store
       .select(FormSelectors.selectPersonalInfo)
       .pipe(
-        combineLatestWith(this.store.select(FormSelectors.selectSelectedPlan))
+        takeUntil(this.destroy$),
+        combineLatestWith(
+          this.store
+            .select(FormSelectors.selectSelectedPlan)
+            .pipe(takeUntil(this.destroy$))
+        )
       )
       .subscribe(([personalInfo, selectedPlan]) => {
         this.canSubmit = !!(
@@ -92,5 +105,10 @@ export class SummaryComponent implements OnInit {
       | 'largerStorage'
       | 'customProfile';
     return addOns[key];
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

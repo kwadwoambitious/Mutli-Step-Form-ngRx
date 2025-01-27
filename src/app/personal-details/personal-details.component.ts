@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as FormActions from '../store/actions/form.actions';
 import * as FormSelectors from '../store/selectors/form.selectors';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-details-info',
@@ -17,7 +19,7 @@ import * as FormSelectors from '../store/selectors/form.selectors';
   templateUrl: './personal-details.component.html',
   styleUrls: ['./personal-details.component.css'],
 })
-export class PersonalDetailsComponent implements OnInit {
+export class PersonalDetailsComponent implements OnInit, OnDestroy {
   personalInfoForm = new FormGroup({
     name: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -25,12 +27,14 @@ export class PersonalDetailsComponent implements OnInit {
   });
 
   public isSubmitted = false;
+  private destroy$ = new Subject<void>();
 
   constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
     this.store
       .select(FormSelectors.selectPersonalInfo)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((personalInfo) => {
         if (personalInfo) {
           this.personalInfoForm.patchValue({
@@ -57,5 +61,10 @@ export class PersonalDetailsComponent implements OnInit {
       this.store.dispatch(FormActions.nextStep());
       this.router.navigate(['/select-plan']);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

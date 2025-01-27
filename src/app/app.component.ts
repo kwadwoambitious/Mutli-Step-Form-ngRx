@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StarterPageComponent } from './starter-page/starter-page.component';
 import {
   Router,
@@ -8,6 +8,8 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as FormActions from './store/actions/form.actions';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +20,14 @@ import * as FormActions from './store/actions/form.actions';
 })
 export class AppComponent implements OnInit {
   public showStarterPage = true;
+  private destroy$ = new Subject<void>();
 
   constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
     this.checkRouteAndUpdatePageVisibility();
 
-    this.router.events.subscribe(() => {
+    this.router.events.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.checkRouteAndUpdatePageVisibility();
     });
   }
@@ -37,5 +40,10 @@ export class AppComponent implements OnInit {
     this.store.dispatch(FormActions.resetForm());
     this.showStarterPage = true;
     this.router.navigate(['/']);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
