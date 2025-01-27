@@ -1,7 +1,7 @@
 [
   {
     "name": "Arcade",
-    "image": "./images/arcade-image.png",
+    "image": "./assets/images/arcade-image.png",
     "price": {
       "monthly": 9,
       "yearly": {
@@ -12,7 +12,7 @@
   },
   {
     "name": "Advanced",
-    "image": "./images/advanced-image.png",
+    "image": "./assets/images/advanced-image.png",
     "price": {
       "monthly": 12,
       "yearly": {
@@ -23,7 +23,7 @@
   },
   {
     "name": "Pro",
-    "image": "./images/pro-image.png",
+    "image": "./assets/images/pro-image.png",
     "price": {
       "monthly": 15,
       "yearly": {

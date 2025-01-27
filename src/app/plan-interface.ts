@@ -1,15 +1,12 @@
 export interface Plans {
+  type: 'arcade' | 'advanced' | 'pro';
   name: string;
   image: string;
-  price: Price;
-}
-
-export interface Price {
-  monthly: number;
-  yearly: YearlyPrice;
-}
-
-export interface YearlyPrice {
-  yearlyPrice: number;
-  duration: string;
+  price: {
+    monthly: number;
+    yearly: {
+      yearlyPrice: number;
+      duration: string;
+    };
+  };
 }

@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StarterPageComponent } from './starter-page/starter-page.component';
-import { ResetFormService } from './reset-form.service';
-import { Router } from '@angular/router';
-
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  Router,
+  RouterOutlet,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as FormActions from './store/actions/form.actions';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,16 +20,14 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   public showStarterPage = true;
+  private destroy$ = new Subject<void>();
 
-  constructor(
-    private router: Router,
-    private resetFormService: ResetFormService
-  ) {}
+  constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
     this.checkRouteAndUpdatePageVisibility();
 
-    this.router.events.subscribe(() => {
+    this.router.events.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.checkRouteAndUpdatePageVisibility();
     });
   }
@@ -33,8 +37,13 @@ export class AppComponent implements OnInit {
   }
 
   public resetForm(): void {
-    this.resetFormService.resetForm();
+    this.store.dispatch(FormActions.resetForm());
     this.showStarterPage = true;
     this.router.navigate(['/']);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

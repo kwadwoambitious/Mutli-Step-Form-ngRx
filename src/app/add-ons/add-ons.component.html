@@ -5,7 +5,7 @@
     @for(add_on of addOnsContainer; track add_on.name){
     <div
       class="add-on"
-      [ngClass]="{ checked: add_on.selected }"
+      [ngClass]="{ 'checked': add_on.selected }"
       (click)="getChecked(add_on)"
     >
       <div class="add-on-items">

@@ -7,6 +7,7 @@ import { PersonalDetailsComponent } from './personal-details/personal-details.co
 
 export const routes: Routes = [
   { path: '', component: StarterPageComponent },
+  { path: '', redirectTo: 'your-info', pathMatch: 'full' },
   { path: 'your-info', component: PersonalDetailsComponent },
   { path: 'select-plan', component: SelectPlanComponent },
   { path: 'add-ons', component: AddOnsComponent },

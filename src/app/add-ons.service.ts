@@ -10,6 +10,6 @@ export class AddOnsService {
   constructor(private http: HttpClient) {}
 
   public getAddOnsData(): Observable<AddOns[]> {
-    return this.http.get<AddOns[]>('./add-ons-data.json');
+    return this.http.get<AddOns[]>('assets/add-ons-data.json');
   }
 }

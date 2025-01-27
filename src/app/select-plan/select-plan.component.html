@@ -5,9 +5,7 @@
     @for(plan of selectPlanContainer; track plan.name){
     <div
       class="plan-card"
-      [class.selected]="
-        selectedPlan?.name?.toLowerCase() === plan.name.toLowerCase()
-      "
+      [class.selected]="(selectedPlan$ | async)?.isSelected && isPlanSelected(plan)"
       (click)="selectPlan(plan)"
     >
       <div>
